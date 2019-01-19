@@ -14,7 +14,6 @@ class API{
             .baseUrl(CreateRequest.BASE_URL)
             .build()
             .create(CreateRequest::class.java)
-
     }
 }
 

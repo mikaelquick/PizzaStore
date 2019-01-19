@@ -20,6 +20,8 @@ class Main : AppCompatActivity() {
     private fun initFragments(){
         listFragment = List()
         ordersFragment = Orders()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.listContainer,listFragment).commit()
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -43,13 +45,7 @@ class Main : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val transaction = supportFragmentManager.beginTransaction()
         initFragments()
-        transaction.add(R.id.listContainer,listFragment)
-
-        transaction.commit();
-
-
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 }
