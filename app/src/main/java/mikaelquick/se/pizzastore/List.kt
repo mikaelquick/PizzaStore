@@ -14,26 +14,36 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import mikaelquick.se.pizzastore.API.API
 import mikaelquick.se.pizzastore.API.getResturants
+import mikaelquick.se.pizzastore.Adapters.ResturangsAdapter
 
 class List : Fragment() {
     val TAG = "LIST"
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    lateinit var listView: View
 
-        return inflater.inflate(R.layout.list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (!(::listView.isInitialized)) {
+            listView = inflater.inflate(R.layout.list, container, false) as View
+            val rec = listView.findViewById<RecyclerView>(R.id.resturangList)
+            rec.layoutManager = LinearLayoutManager(context)
+            rec.setAdapter(ResturangsAdapter())
+            GlobalScope.launch {
+                try{
+                    val resturants = API.getResturants()
+                    Log.d(TAG,resturants.get(0).id)
+                }
+                catch (e:Exception){
+                    Log.e(TAG,e.message)
+                }
+            }
+        }
+        return listView
     }
+
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        val resturang =  activity?.findViewById<RecyclerView>(R.id.resturangList)
-        resturang?.layoutManager = LinearLayoutManager(context)
-        GlobalScope.launch {
-            try{
-                val resturants = API.getResturants()
-                Log.d(TAG,resturants.get(0).id)
-            }
-            catch (e:Exception){
-                Log.e(TAG,e.message)
-            }
-        }
+
+
+
     }
 }

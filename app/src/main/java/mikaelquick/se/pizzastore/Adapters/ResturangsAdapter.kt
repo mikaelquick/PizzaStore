@@ -10,11 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.list.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 import mikaelquick.se.pizzastore.API.API
 import mikaelquick.se.pizzastore.API.Resturant
 import mikaelquick.se.pizzastore.API.getResturants
+import android.R
 
 
 class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.PlayableViewHolder>() {
@@ -22,12 +22,16 @@ class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.PlayableViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, postion: Int): PlayableViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R, parent, false)
+        val view = inflater.inflate(postion, parent, false)
         return PlayableViewHolder(view)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return R.layout.simple_list_item_single_choice
+    }
+
     override fun getItemCount(): Int {
-        return items.count()
+        return 1
     }
 
     override fun onBindViewHolder(p0: PlayableViewHolder, p1: Int) {
