@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.list.*
 
 class Main : AppCompatActivity() {
 
@@ -14,7 +17,8 @@ class Main : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.listContainer,fragment)
-        transaction.commit();
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun initFragments(){
