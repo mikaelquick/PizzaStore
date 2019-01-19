@@ -7,6 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class API{
 
     companion object {
+        inline fun <reified T>json2Object(json:String): T{
+           return gson.fromJson(json, T::class.java)
+        }
         val TAG = "API"
         val gson = Gson()
         val service = Retrofit.Builder()
