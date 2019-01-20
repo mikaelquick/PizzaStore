@@ -12,7 +12,6 @@ import mikaelquick.se.pizzastore.R
 
 class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.ResturangViewHolder>() {
     private var items = mutableListOf<Resturant>()
-    private var location: Location? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, resource: Int): ResturangViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,12 +19,19 @@ class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.ResturangViewHol
         return ResturangViewHolder(view)
     }
 
-    fun setItems(items: List<Resturant>,location: Location?) {
+    fun setItems(inItems: List<Resturant>, location: Location?) {
         this.items.clear()
-        this.items.addAll(items)
-        location?.let {
-            this.location = it
+        var items = inItems
+        location?.let { current ->
+            inItems.forEach { resturant ->
+                current.distanceTo(resturant.location).let { orgDistance ->
+                    resturant.distanceFromMe = orgDistance
+                }
+
+            }
+            items = inItems.sortedWith(compareBy({ it.distanceFromMe }))
         }
+        this.items.addAll(items)
         notifyDataSetChanged()
     }
 

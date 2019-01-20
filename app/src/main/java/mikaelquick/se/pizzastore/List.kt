@@ -55,18 +55,8 @@ class List() : Fragment() {
     fun downloadAndSet(){
         GlobalScope.launch {
             try{
-                var resturants = API.getResturants().toList()
+                val resturants = API.getResturants().toList()
                 activity?.runOnUiThread {
-                    currentLocation?.let {current->
-                        resturants.forEach {resturant->
-                            current.distanceTo(resturant.location).let {orgDistance->
-                                resturant.distanceFromMe = orgDistance
-                            }
-
-                        }
-                        resturants = resturants.sortedWith(compareBy({ it.distanceFromMe }))
-
-                    }
                     adapter?.setItems(resturants,currentLocation)
                 }
             }
