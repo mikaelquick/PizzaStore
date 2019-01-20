@@ -1,6 +1,7 @@
 package mikaelquick.se.pizzastore.Adapters
 
 import android.content.Context
+import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -23,6 +24,7 @@ import mikaelquick.se.pizzastore.R
 
 class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.PlayableViewHolder>() {
     private var items = mutableListOf<Resturant>()
+    private var location: Location? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, resource: Int): PlayableViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -30,9 +32,12 @@ class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.PlayableViewHold
         return PlayableViewHolder(view)
     }
 
-    fun setItems(items: List<Resturant>) {
+    fun setItems(items: List<Resturant>,location: Location?) {
         this.items.clear()
         this.items.addAll(items)
+        location?.let {
+            this.location = it
+        }
         notifyDataSetChanged()
     }
 
