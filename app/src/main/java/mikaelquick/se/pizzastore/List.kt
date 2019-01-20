@@ -1,7 +1,6 @@
 package mikaelquick.se.pizzastore
 
 import android.content.Context
-import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.list.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import mikaelquick.se.pizzastore.API.API
@@ -45,22 +43,31 @@ class List() : Fragment() {
         if (updateLocation) {
             try {
                 currentLocation = myLocation?.getCurretLocation()
-                downLoadList()
+                downloadAndSet()
             } catch (e: Exception) {
                 Log.e(TAG, e.message)
             }
         } else {
-            downLoadList()
+            downloadAndSet()
         }
     }
 
-    fun downLoadList(){
+    fun downloadAndSet(){
         GlobalScope.launch {
             try{
-                val resturants = API.getResturants()
+                var resturants = API.getResturants().toList()
                 activity?.runOnUiThread {
-                    adapter?.setItems(resturants.toList(),currentLocation)
+                    currentLocation?.let {current->
+                        resturants.forEach {resturant->
+                            current.distanceTo(resturant.location).let {orgDistance->
+                                resturant.distanceFromMe = orgDistance
+                            }
 
+                        }
+                        resturants = resturants.sortedWith(compareBy({ it.distanceFromMe }))
+
+                    }
+                    adapter?.setItems(resturants,currentLocation)
                 }
             }
             catch (e:Exception){

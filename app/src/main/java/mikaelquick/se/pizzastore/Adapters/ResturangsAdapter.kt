@@ -2,7 +2,6 @@ package mikaelquick.se.pizzastore.Adapters
 
 import android.location.Location
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,11 +36,19 @@ class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.ResturangViewHol
     override fun onBindViewHolder(holder: ResturangViewHolder, postion: Int) {
         val item = items[postion]
 
+        item.distanceFromMe?.let {distance->
+            holder.distanceText.text = styleDistanceText(distance)
+        }
+
         holder.titleView.text = item.name
-        Log.e("item",item.location?.latitude.toString())
-        holder.distanceText.text = location?.distanceTo(item.location).toString()
     }
 
+    private fun styleDistanceText(orgDistance:Float):String{
+        if(orgDistance< 1000){
+            return "${String.format("%.0f",orgDistance)}m"
+        }
+        return "${String.format("%.0f",orgDistance/1000)}km"
+    }
 
    class ResturangViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var titleView: TextView = itemView.findViewById(R.id.resturang_title)

@@ -29,9 +29,9 @@ class MyLocation(val activity: FragmentActivity) {
             )
 
         if (isGPSActive) {
-            val fineLocationP = checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
+            val fineLocationP = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
             val coarseLocation =
-                checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
+                ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
             val noPermission = (fineLocationP != PackageManager.PERMISSION_GRANTED) && (coarseLocation != PackageManager.PERMISSION_GRANTED)
             if (noPermission) {
                 requestPermissions(activity,
