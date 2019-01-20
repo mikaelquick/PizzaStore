@@ -6,10 +6,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class API{
 
-    inline fun <reified T>json2Object(json:String): T{
-        return gson.fromJson(json, T::class.java)
-    }
-
     companion object {
         inline fun <reified T>json2Object(json:String): T{
            return gson.fromJson(json, T::class.java)

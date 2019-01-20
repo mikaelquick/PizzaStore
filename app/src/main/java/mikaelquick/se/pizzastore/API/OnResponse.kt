@@ -13,6 +13,7 @@ suspend fun API.Companion.getResturants():Array<Resturant>{
     return suspendCoroutine { cor->
         try {
             val result =  service.getResturants().execute()
+            Log.e(TAG,result.body().toString())
             val obj = API.json2Object<Array<Resturant>>(result.body().toString())
             cor.resume(obj)
         }

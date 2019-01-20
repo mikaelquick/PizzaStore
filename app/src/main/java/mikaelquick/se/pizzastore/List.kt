@@ -34,8 +34,6 @@ class List : Fragment() {
                         adapter.setItems(resturants.toList())
 
                     }
-
-                    Log.d(TAG,resturants.get(0).id)
                 }
                 catch (e:Exception){
                     Log.e(TAG,e.message)

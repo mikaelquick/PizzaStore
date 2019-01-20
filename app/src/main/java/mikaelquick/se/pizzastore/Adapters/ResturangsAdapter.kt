@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import kotlinx.android.synthetic.main.list.*
 import kotlinx.android.synthetic.main.resturang_item.view.*
 import kotlinx.coroutines.GlobalScope
@@ -41,16 +42,14 @@ class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.PlayableViewHold
         return items.size
     }
 
-    override fun onBindViewHolder(p0: PlayableViewHolder, p1: Int) {
+    override fun onBindViewHolder(holder: PlayableViewHolder, postion: Int) {
+        val item = items[postion]
 
+        holder.titleView.text = item.name
     }
 
 
     class PlayableViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
+        var titleView: TextView = itemView.findViewById(R.id.resturang_title)
     }
-}
-
-class PlayableViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
 }
