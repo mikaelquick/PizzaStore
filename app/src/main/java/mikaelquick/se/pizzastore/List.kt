@@ -67,10 +67,12 @@ class List() : Fragment() {
     }
 
     fun initList(inflater: LayoutInflater,container: ViewGroup?){
-        adapter = ResturangsAdapter()
-        listView = inflater.inflate(R.layout.list, container, false)
-        val rec = listView.findViewById<RecyclerView>(R.id.resturangList)
-        rec.layoutManager = LinearLayoutManager(context)
-        rec.setAdapter(adapter)
+        context?.let {contextChecked->
+            adapter = ResturangsAdapter(contextChecked)
+            listView = inflater.inflate(R.layout.list, container, false)
+            val rec = listView.findViewById<RecyclerView>(R.id.resturangList)
+            rec.layoutManager = LinearLayoutManager(contextChecked)
+            rec.setAdapter(adapter)
+        }
     }
 }
