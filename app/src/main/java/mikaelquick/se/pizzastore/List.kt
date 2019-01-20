@@ -24,40 +24,37 @@ class List() : Fragment() {
     var adapter: ResturangsAdapter? =null
     lateinit var listView: View
     var currentLocation: Location? = null
+    var myLocation: MyLocation? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (!(::listView.isInitialized)) {
             initList(inflater,container)
-            activity?.let {activityChecked->
-                val myLocation = MyLocation(activityChecked)
-
-                try {
-                    currentLocation = myLocation.getCurretLocation()
-                    addResturantsToList()
-                }
-                catch (e:Exception){
-                    Log.e("MAIN",e.message)
-                }
-        }
+                    addResturantsToList(updateLocation = true)
         }
         return listView
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.e(TAG,"RESULT")
-        addResturantsToList()
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        activity?.let {activityChecked->
+            myLocation = MyLocation(activityChecked)
+        }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.e(TAG,"RESULT")
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.e(TAG,"RESULT")
+    fun addResturantsToList(updateLocation:Boolean = false) {
+        if (updateLocation) {
+            try {
+                currentLocation = myLocation?.getCurretLocation()
+                downLoadList()
+            } catch (e: Exception) {
+                Log.e(TAG, e.message)
+            }
+        } else {
+            downLoadList()
+        }
     }
 
-
-
-    fun addResturantsToList(){
+    fun downLoadList(){
         GlobalScope.launch {
             try{
                 val resturants = API.getResturants()

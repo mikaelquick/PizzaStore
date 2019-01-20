@@ -3,6 +3,7 @@ package mikaelquick.se.pizzastore
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -30,7 +31,8 @@ class Main : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        listFragment.addResturantsToList()
+        val shallUpdatee = grantResults[0] ==  PERMISSION_GRANTED
+        listFragment.addResturantsToList(updateLocation = shallUpdatee)
     }
 
     private fun initFragments(){
