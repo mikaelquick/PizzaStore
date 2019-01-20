@@ -53,10 +53,7 @@ class Main : AppCompatActivity() {
                 replaceFragment(ordersFragment)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
 
-                return@OnNavigationItemSelectedListener true
-            }
         }
         false
     }

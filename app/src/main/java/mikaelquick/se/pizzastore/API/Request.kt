@@ -24,4 +24,20 @@ suspend fun API.Companion.getResturants():Array<Resturant>{
     }
 }
 
+suspend fun API.Companion.getMenu(id:Int):Array<Resturant>{
+
+    return suspendCoroutine { cor->
+        try {
+            val result =  service.getMenu(id).execute()
+            Log.e(TAG,result.body().toString())
+          //  val obj = API.json2Object<Array<Resturant>>(result.body().toString())
+           // cor.resume(obj)
+        }
+        catch (e:Exception){
+            Log.e(TAG,e.message)
+            cor.resumeWithException(e)
+        }
+    }
+}
+
 
