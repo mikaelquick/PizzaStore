@@ -22,14 +22,23 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         initList()
-        GlobalScope.launch {
-            try {
-                API.getMenu(1)
-            }catch (e:Exception){
-                Log.e("DEAL",e.message)
-            }
+        if(intent.hasExtra("id")){
+            val id = intent.getIntExtra("id",0)
+            Log.d("DETAIL",id.toString())
+            GlobalScope.launch {
+                try {
+                   val menu = API.getMenu(id)
 
+                    runOnUiThread {
+                        adapter.setItems(menu.toList())
+                    }
+                }catch (e:Exception){
+                    Log.e("DEAL",e.message)
+                }
+
+            }
         }
+
     }
 
     fun initList(){

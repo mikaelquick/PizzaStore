@@ -52,9 +52,9 @@ class ResturangsAdapter(val context: Context): RecyclerView.Adapter<ResturangsAd
         holder.titleView.text = item.name
 
         holder.card.setOnClickListener({
-            Log.e("ADAP","Click")
-            val intent = Intent(context,DetailActivity::class.java)
-            context.startActivity(intent)
+            val detailIntent = Intent(context,DetailActivity::class.java)
+            detailIntent.putExtra("id",item.id)
+            context.startActivity(detailIntent)
         })
     }
 
