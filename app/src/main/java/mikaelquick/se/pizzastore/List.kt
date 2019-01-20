@@ -22,13 +22,19 @@ class List : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (!(::listView.isInitialized)) {
-            listView = inflater.inflate(R.layout.list, container, false) as View
+            val adapter = ResturangsAdapter()
+            listView = inflater.inflate(R.layout.list, container, false)
             val rec = listView.findViewById<RecyclerView>(R.id.resturangList)
             rec.layoutManager = LinearLayoutManager(context)
-            rec.setAdapter(ResturangsAdapter())
+            rec.setAdapter(adapter)
             GlobalScope.launch {
                 try{
                     val resturants = API.getResturants()
+                    activity?.runOnUiThread {
+                        adapter.setItems(resturants.toList())
+
+                    }
+
                     Log.d(TAG,resturants.get(0).id)
                 }
                 catch (e:Exception){

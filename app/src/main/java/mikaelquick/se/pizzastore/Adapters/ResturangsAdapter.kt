@@ -10,28 +10,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.list.*
-
+import kotlinx.android.synthetic.main.resturang_item.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import mikaelquick.se.pizzastore.API.API
 import mikaelquick.se.pizzastore.API.Resturant
 import mikaelquick.se.pizzastore.API.getResturants
-import android.R
+import mikaelquick.se.pizzastore.Adapters.ResturangsAdapter
+import mikaelquick.se.pizzastore.R
 
 
 class ResturangsAdapter: RecyclerView.Adapter<ResturangsAdapter.PlayableViewHolder>() {
     private var items = mutableListOf<Resturant>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, postion: Int): PlayableViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, resource: Int): PlayableViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(postion, parent, false)
+        val view = inflater.inflate(R.layout.resturang_item , parent, false)
         return PlayableViewHolder(view)
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return R.layout.simple_list_item_single_choice
+    fun setItems(items: List<Resturant>) {
+        this.items.clear()
+        this.items.addAll(items)
+        notifyDataSetChanged()
     }
 
+
+
     override fun getItemCount(): Int {
-        return 1
+        return items.size
     }
 
     override fun onBindViewHolder(p0: PlayableViewHolder, p1: Int) {
