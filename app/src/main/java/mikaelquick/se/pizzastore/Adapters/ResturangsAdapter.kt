@@ -45,10 +45,10 @@ class ResturangsAdapter(val context: Context): RecyclerView.Adapter<ResturangsAd
 
     override fun onBindViewHolder(holder: ResturangViewHolder, postion: Int) {
         val item = items[postion]
-
         item.distanceFromMe?.let {distance->
             holder.distanceText.text = styleDistanceText(distance)
         }
+
         holder.titleView.text = item.name
 
         holder.card.setOnClickListener({
