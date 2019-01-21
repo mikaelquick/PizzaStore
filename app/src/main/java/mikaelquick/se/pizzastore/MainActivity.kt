@@ -1,26 +1,18 @@
 package mikaelquick.se.pizzastore
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.list.*
-import mikaelquick.se.pizzastore.Utils.MyLocation
+import mikaelquick.se.pizzastore.Fragments.ListFragment
+import mikaelquick.se.pizzastore.Fragments.OrdersFragment
 
-class Main : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var listFragment: List
-    private lateinit var ordersFragment: Orders
+    private lateinit var listFragmentFragment: ListFragment
+    private lateinit var ordersFragmentFragment: OrdersFragment
 
     private fun replaceFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
@@ -32,25 +24,24 @@ class Main : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val shallUpdatee = grantResults[0] ==  PERMISSION_GRANTED
-        listFragment.addResturantsToList(updateLocation = shallUpdatee)
+        listFragmentFragment.addResturantsToList(updateLocation = shallUpdatee)
     }
 
     private fun initFragments(){
-        listFragment = List()
-
-        ordersFragment = Orders()
+        listFragmentFragment = ListFragment()
+        ordersFragmentFragment = OrdersFragment()
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.listContainer,listFragment).commit()
+        transaction.add(R.id.listContainer,listFragmentFragment).commit()
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                replaceFragment(listFragment)
+                replaceFragment(listFragmentFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                replaceFragment(ordersFragment)
+                replaceFragment(ordersFragmentFragment)
                 return@OnNavigationItemSelectedListener true
             }
 

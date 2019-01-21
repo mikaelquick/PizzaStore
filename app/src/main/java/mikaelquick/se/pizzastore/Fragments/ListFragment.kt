@@ -1,4 +1,4 @@
-package mikaelquick.se.pizzastore
+package mikaelquick.se.pizzastore.Fragments
 
 import android.content.Context
 import android.location.Location
@@ -16,8 +16,9 @@ import mikaelquick.se.pizzastore.API.API
 import mikaelquick.se.pizzastore.API.getResturants
 import mikaelquick.se.pizzastore.Adapters.ResturangsAdapter
 import mikaelquick.se.pizzastore.Utils.MyLocation
+import mikaelquick.se.pizzastore.R
 
-class List() : Fragment() {
+class ListFragment() : Fragment() {
     val TAG = "LIST"
     var adapter: ResturangsAdapter? =null
     lateinit var listView: View
@@ -52,7 +53,7 @@ class List() : Fragment() {
         }
     }
 
-    fun downloadAndSet(){
+   private fun downloadAndSet(){
         GlobalScope.launch {
             try{
                 val resturants = API.getResturants().toList()
@@ -66,7 +67,7 @@ class List() : Fragment() {
         }
     }
 
-    fun initList(inflater: LayoutInflater,container: ViewGroup?){
+   private fun initList(inflater: LayoutInflater,container: ViewGroup?){
         context?.let {contextChecked->
             adapter = ResturangsAdapter(contextChecked)
             listView = inflater.inflate(R.layout.list, container, false)

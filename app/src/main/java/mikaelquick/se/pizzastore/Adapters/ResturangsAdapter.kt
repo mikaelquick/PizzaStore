@@ -52,9 +52,7 @@ class ResturangsAdapter(val context: Context): RecyclerView.Adapter<ResturangsAd
         holder.titleView.text = item.name
 
         holder.card.setOnClickListener({
-            val detailIntent = Intent(context,DetailActivity::class.java)
-            detailIntent.putExtra("id",item.id)
-            context.startActivity(detailIntent)
+            goDetail(item.id)
         })
     }
 
@@ -63,6 +61,12 @@ class ResturangsAdapter(val context: Context): RecyclerView.Adapter<ResturangsAd
             return "${String.format("%.0f",orgDistance)}m"
         }
         return "${String.format("%.0f",orgDistance/1000)}km"
+    }
+
+    private fun goDetail(id:Int){
+        val detailIntent = Intent(context,DetailActivity::class.java)
+        detailIntent.putExtra("id",id)
+        context.startActivity(detailIntent)
     }
 
    class ResturangViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

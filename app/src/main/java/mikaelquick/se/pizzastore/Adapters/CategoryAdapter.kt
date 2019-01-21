@@ -1,26 +1,20 @@
 package mikaelquick.se.pizzastore.Adapters
 
 import android.content.Context
-import android.content.Intent
-import android.location.Location
 import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import mikaelquick.se.pizzastore.API.Resturant
 import mikaelquick.se.pizzastore.Models.MenuObjects
-import mikaelquick.se.pizzastore.Views.DetailActivity
 import mikaelquick.se.pizzastore.R
 
 class CategoryAdapter(val context: Context): RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    var cat = ""
+    private var cat = ""
 
     override fun onBindViewHolder(holder: CategoryViewHolder, postion: Int) {
         val item = items[postion]

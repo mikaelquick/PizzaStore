@@ -1,8 +1,6 @@
 package mikaelquick.se.pizzastore.API
 
 import android.location.Location
-import android.util.Log
-
 
 class Resturant(){
     val id: Int = 0

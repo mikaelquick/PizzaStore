@@ -1,13 +1,11 @@
 package mikaelquick.se.pizzastore.Views
 
-import android.app.Dialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
-import android.view.Window
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import mikaelquick.se.pizzastore.API.API
@@ -17,6 +15,7 @@ import mikaelquick.se.pizzastore.R
 
 class DetailActivity : AppCompatActivity() {
 
+    val TAG = "DETAIL"
     lateinit var adapter: CategoryAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +23,6 @@ class DetailActivity : AppCompatActivity() {
         initList()
         if(intent.hasExtra("id")){
             val id = intent.getIntExtra("id",0)
-            Log.d("DETAIL",id.toString())
             GlobalScope.launch {
                 try {
                    val menu = API.getMenu(id)
@@ -33,15 +31,13 @@ class DetailActivity : AppCompatActivity() {
                         adapter.setItems(menu.toList())
                     }
                 }catch (e:Exception){
-                    Log.e("DEAL",e.message)
+                    Log.e(TAG,e.message)
                 }
-
             }
         }
-
     }
 
-    fun initList(){
+   private fun initList(){
         adapter = CategoryAdapter(this)
         val rec = findViewById<RecyclerView>(R.id.category_container)
         rec.layoutManager = LinearLayoutManager(this)
